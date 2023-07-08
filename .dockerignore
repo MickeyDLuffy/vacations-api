@@ -1,0 +1,14 @@
+target/
+.settings/
+README.md
+HELP.md
+.gitignore
+docker-compose.yml
+.apt_generated/
+.gradle/
+bin/
+build/
+
+.idea
+
+
