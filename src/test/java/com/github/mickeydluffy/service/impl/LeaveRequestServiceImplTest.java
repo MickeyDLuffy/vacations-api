@@ -47,7 +47,7 @@ class LeaveRequestServiceImplTest {
         when(leaveValidationService.validate(leaveRequest)).thenReturn(leaveRequest);
         LeaveResponseDto result = leaveRequestService.applyForLeave(leaveRequestDto);
         assertEquals(leaveRequestDto.getStartDate(), result.getStartDate());
-        assertEquals(leaveRequestDto.getEmployee(), result.getUser());
+        assertEquals(leaveRequestDto.getEmployee(), result.getEmployee());
         verify(leaveRequestRepository, times(1)).save(leaveRequest);
     }
 }
