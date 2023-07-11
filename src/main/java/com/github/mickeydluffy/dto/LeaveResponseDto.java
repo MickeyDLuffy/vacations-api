@@ -10,16 +10,14 @@ import java.time.LocalDate;
 @Data
 public class LeaveResponseDto {
     private String id;
-    private UserDto user;
+    private UserDto employee;
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason;
     private LeaveStatus status;
 
     public static LeaveResponseDto fromEntity(LeaveRequest entity) {
-        return LeaveResponseDto.builder()
-            .id(entity.getId())
-            .user(entity.getEmployee())
+        return LeaveResponseDto.builder().id(entity.getId()).employee(entity.getEmployee())
             .startDate(entity.getStartDate())
             .endDate(entity.getEndDate())
             .reason(entity.getReason())
