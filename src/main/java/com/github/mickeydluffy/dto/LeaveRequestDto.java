@@ -29,6 +29,8 @@ public class LeaveRequestDto {
     @Size(max = 100, message = "Reason must be more than 100 characters")
     private String reason;
 
+    private LeaveType leaveType;
+
     public static LeaveRequest toEntity(LeaveRequestDto dto) {
         return LeaveRequest.builder().employee(dto.employee).startDate(dto.startDate).endDate(dto.endDate).reason(dto.reason).build();
     }

@@ -23,7 +23,7 @@ WORKDIR /vacations-api
 # Copy the built JAR file from the build stage
 COPY --from=build /vacations-api/build/libs/vacations-api.jar .
 
-EXPOSE 8080
+EXPOSE 5002
 
 # Run the Spring Boot application
 CMD ["java", "-jar", "vacations-api.jar"]

@@ -44,7 +44,7 @@ class LeaveRequestServiceImplTest {
     @Test
     void saveLeaveRequest() {
         when(leaveRequestRepository.save(leaveRequest)).thenReturn(leaveRequest);
-        when(leaveValidationService.validate(leaveRequest)).thenReturn(leaveRequest);
+        when(leaveValidationService.validateLeaveDaysOverlap(leaveRequest)).thenReturn(leaveRequest);
         LeaveResponseDto result = leaveRequestService.applyForLeave(leaveRequestDto);
         assertEquals(leaveRequestDto.getStartDate(), result.getStartDate());
         assertEquals(leaveRequestDto.getEmployee(), result.getEmployee());
