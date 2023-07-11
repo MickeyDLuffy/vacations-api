@@ -1,7 +1,9 @@
 package com.github.mickeydluffy.restcontroller;
 
 import com.github.mickeydluffy.dto.LeaveRequestDto;
+import com.github.mickeydluffy.dto.LeaveResponseDto;
 import com.github.mickeydluffy.service.LeaveApprovalService;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,8 @@ public class LeaveApprovalController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<LeaveRequestDto>> fetchLeavesToApprove(Pageable pageable) {
+    public ResponseEntity<Page<LeaveResponseDto>> fetchLeavesToApprove(@Nullable Pageable pageable) {
         return ResponseEntity.ok(leaveApprovalService.fetchLeavesToApprove(pageable));
     }
+
 }
