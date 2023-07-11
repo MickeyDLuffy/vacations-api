@@ -18,4 +18,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{'username': ?0, 'leaveBalance.leaveType': ?1}")
     void updateLeaveDaysByUsernameAndLeaveType(String username, LeaveType leaveType, int days);
+
+    @Query(value = "{ 'username' : ?0, 'leaveBalance.leaveType' : ?1 }", fields = "{ '_id' : 0, 'leaveBalance.$' : 1 }")
+    Optional<User> findLeaveDaysByUsernamesAndLeaveType(String username, LeaveType leaveType);
 }

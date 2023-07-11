@@ -1,13 +1,21 @@
 package com.github.mickeydluffy.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
-public abstract class Auditable {
+public class Auditable {
+    @CreatedBy
     private String createdBy;
-    private LocalDateTime createdTimeStamp;
+    @CreatedDate
+    private LocalDate createdTimeStamp;
+    @LastModifiedBy
     private String lastModifiedBy;
-    private LocalDateTime lastModifiedTimestamp;
+    @LastModifiedDate
+    private LocalDate lastModifiedTimestamp;
 }

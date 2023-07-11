@@ -15,13 +15,24 @@ public class LeaveResponseDto {
     private LocalDate endDate;
     private String reason;
     private LeaveStatus status;
+    private LocalDate leaveModifiedTime;
+    private LocalDate leaveCreationTime;
+    private String leaveCreatedBy;
+    private String leaveModifiedBy;
 
     public static LeaveResponseDto fromEntity(LeaveRequest entity) {
-        return LeaveResponseDto.builder().id(entity.getId()).employee(entity.getEmployee())
+        return LeaveResponseDto.builder()
+            .id(entity.getId())
+            .employee(entity.getEmployee())
             .startDate(entity.getStartDate())
             .endDate(entity.getEndDate())
             .reason(entity.getReason())
             .status(entity.getStatus())
+            .employee(entity.getEmployee())
+            .leaveCreatedBy(entity.getCreatedBy())
+            .leaveCreationTime(entity.getCreatedTimeStamp())
+            .leaveCreatedBy(entity.getCreatedBy())
+            .leaveModifiedBy(entity.getLastModifiedBy())
             .build();
     }
 }

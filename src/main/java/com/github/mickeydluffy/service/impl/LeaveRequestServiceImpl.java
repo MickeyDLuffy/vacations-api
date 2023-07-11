@@ -2,7 +2,7 @@ package com.github.mickeydluffy.service.impl;
 
 import com.github.mickeydluffy.dto.LeaveRequestDto;
 import com.github.mickeydluffy.dto.LeaveResponseDto;
-import com.github.mickeydluffy.service.LeaveRequestRepository;
+import com.github.mickeydluffy.repository.LeaveRequestRepository;
 import com.github.mickeydluffy.service.LeaveRequestService;
 import com.github.mickeydluffy.service.LeaveValidationService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,19 +23,14 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final LeaveValidationService leaveValidationService;
 
     @Override
-    public LeaveResponseDto applyForLeave(LeaveRequestDto dto) {
-        try {
-            return CompletableFuture.supplyAsync(() -> LeaveRequestDto.toEntity(dto))
-                .thenApply(leaveValidationService::validateAvailableLeaveBalance)
-                .thenApply(leaveValidationService::validateLeaveDaysOverlap)
-                .thenApply(leaveValidationService::validateLeaveDates)
-                .thenApply(leaveRequestRepository::save)
-                .thenApply(LeaveResponseDto::fromEntity)
-                .get();
-        } catch (InterruptedException | ExecutionException e) {
-            Thread.currentThread().interrupt();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
+    public CompletableFuture<LeaveResponseDto> applyForLeave(LeaveRequestDto dto) {
+
+        return CompletableFuture.supplyAsync(() -> LeaveRequestDto.toEntity(dto))
+            .thenApply(leaveValidationService::validateAvailableLeaveBalance)
+            .thenApply(leaveValidationService::validateLeaveDaysOverlap)
+            .thenApply(leaveValidationService::validateLeaveDates)
+            .thenApply(leaveRequestRepository::save)
+            .thenApply(LeaveResponseDto::fromEntity);
     }
 
     @Override

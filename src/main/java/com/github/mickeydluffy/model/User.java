@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Set;
 
 @Document(collection = "users")
@@ -16,5 +17,6 @@ public class User extends Auditable {
     private String username;
     private String password;
     private Set<Role> roles;
-    private Set<LeaveBalance> leaveBalance;
+    private List<LeaveBalance> leaveBalance;
+    private String manager;
 }

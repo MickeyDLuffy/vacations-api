@@ -1,4 +1,4 @@
-package com.github.mickeydluffy.service;
+package com.github.mickeydluffy.repository;
 
 import com.github.mickeydluffy.dto.UserDto;
 import com.github.mickeydluffy.model.LeaveRequest;

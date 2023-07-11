@@ -2,6 +2,7 @@ package com.github.mickeydluffy.restcontroller;
 
 import com.github.mickeydluffy.dto.LeaveRequestDto;
 import com.github.mickeydluffy.dto.LeaveResponseDto;
+import com.github.mickeydluffy.repository.UserRepository;
 import com.github.mickeydluffy.service.LeaveRequestService;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
@@ -11,8 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static com.github.mickeydluffy.util.Constants.API_VERSION;
 
@@ -21,12 +22,17 @@ import static com.github.mickeydluffy.util.Constants.API_VERSION;
 @RequestMapping(API_VERSION + "/leave-requests")
 public class LeaveApplicationController {
     private final LeaveRequestService leaveRequestService;
+    private final UserRepository userRepository;
+
+    @PostMapping("/test")
+    public LeaveRequestDto applyForLeaved(@RequestBody @Valid LeaveRequestDto leaveRequestDto) {
+
+        return leaveRequestDto;
+    }
 
     @PostMapping
-    public ResponseEntity<LeaveResponseDto> applyForLeave(@RequestBody @Valid LeaveRequestDto leaveRequestDto) {
-        LeaveResponseDto leaveResponse = leaveRequestService.applyForLeave(leaveRequestDto);
-        URI uri = URI.create(String.format("%s/leave-requests/%s", API_VERSION, leaveResponse.getId()));
-        return ResponseEntity.created(uri).body(leaveResponse);
+    public CompletableFuture<LeaveResponseDto> applyForLeave(@RequestBody @Valid LeaveRequestDto leaveRequestDto) {
+        return leaveRequestService.applyForLeave(leaveRequestDto);
     }
 
     @GetMapping
