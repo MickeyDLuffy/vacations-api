@@ -14,6 +14,8 @@ import java.time.LocalDate;
 @Builder
 @Data
 public class LeaveRequestDto {
+    private String id;
+
     @Valid
     private UserDto employee;
 
@@ -33,7 +35,7 @@ public class LeaveRequestDto {
     private LeaveType leaveType;
 
     public static LeaveRequest toEntity(LeaveRequestDto dto) {
-        return LeaveRequest.builder()
+        return LeaveRequest.builder().id(dto.id)
             .employee(dto.employee)
             .startDate(dto.startDate)
             .leaveType(dto.leaveType)

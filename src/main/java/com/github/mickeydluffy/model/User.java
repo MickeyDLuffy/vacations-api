@@ -2,6 +2,7 @@ package com.github.mickeydluffy.model;
 
 import com.github.mickeydluffy.dto.LeaveBalance;
 import com.github.mickeydluffy.dto.Role;
+import com.github.mickeydluffy.dto.UserDto;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,4 +20,8 @@ public class User extends Auditable {
     private Set<Role> roles;
     private List<LeaveBalance> leaveBalance;
     private String manager;
+
+    public static UserDto fromEntity(User user) {
+        return UserDto.builder().id(user.getId()).roles(user.getRoles()).username(user.getUsername()).manager(user.getManager()).build();
+    }
 }
