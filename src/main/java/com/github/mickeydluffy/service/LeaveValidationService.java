@@ -6,5 +6,9 @@ public interface LeaveValidationService {
 
     Boolean isValid(LeaveRequest leaveRequest);
 
-    LeaveRequest validate(LeaveRequest request);
+    LeaveRequest validateLeaveDaysOverlap(LeaveRequest request);
+
+    LeaveRequest validateAvailableLeaveBalance(LeaveRequest leaveRequest);
+
+    LeaveRequest validateLeaveDates(LeaveRequest leaveRequest);
 }

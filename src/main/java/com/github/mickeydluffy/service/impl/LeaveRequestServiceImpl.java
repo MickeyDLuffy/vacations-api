@@ -27,10 +27,11 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponseDto applyForLeave(LeaveRequestDto dto) {
         try {
             return CompletableFuture.supplyAsync(() -> LeaveRequestDto.toEntity(dto))
-                .thenApply(leaveValidationService::validate)
+                .thenApply(leaveValidationService::validateAvailableLeaveBalance)
+                .thenApply(leaveValidationService::validateLeaveDaysOverlap)
+                .thenApply(leaveValidationService::validateLeaveDates)
                 .thenApply(leaveRequestRepository::save)
                 .thenApply(LeaveResponseDto::fromEntity)
-                //                .exceptionally(error -> {throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, error.getMessage());})
                 .get();
         } catch (InterruptedException | ExecutionException e) {
             Thread.currentThread().interrupt();

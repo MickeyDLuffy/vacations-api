@@ -16,5 +16,5 @@ public class User extends Auditable {
     private String username;
     private String password;
     private Set<Role> roles;
-    private LeaveBalance leaveBalance;
+    private Set<LeaveBalance> leaveBalance;
 }
