@@ -1,6 +1,7 @@
 package com.github.mickeydluffy.model;
 
 import com.github.mickeydluffy.dto.LeaveStatus;
+import com.github.mickeydluffy.dto.LeaveType;
 import com.github.mickeydluffy.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,5 +26,6 @@ public class LeaveRequest extends Auditable {
     private String reason;
     @Builder.Default
     private LeaveStatus status = LeaveStatus.PENDING;
+    private LeaveType leaveType;
 }
 

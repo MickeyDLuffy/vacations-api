@@ -1,13 +1,14 @@
 package com.github.mickeydluffy.service.impl;
 
+import com.github.mickeydluffy.dto.LeaveType;
 import com.github.mickeydluffy.exception.LeaveApplicationException;
 import com.github.mickeydluffy.exception.LeaveValidationException;
 import com.github.mickeydluffy.model.LeaveRequest;
+import com.github.mickeydluffy.model.User;
+import com.github.mickeydluffy.repository.LeaveRequestRepository;
 import com.github.mickeydluffy.repository.UserRepository;
-import com.github.mickeydluffy.service.LeaveRequestRepository;
 import com.github.mickeydluffy.service.LeaveValidationService;
 import com.github.mickeydluffy.util.DateUtils;
-import com.github.mickeydluffy.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +28,13 @@ public class LeaveValidationServiceImpl implements LeaveValidationService {
 
     @Override
     public LeaveRequest validateLeaveDaysOverlap(LeaveRequest request) {
+
         if (leaveRequestNotOverlapping().apply(request)) {
             return request;
         }
 
-        var message = String.format("You have an overlapping leave request" + " applied for leave for the period %s and %s",
+        var message = String.format(
+            "You have an overlapping leave request applied for leave for the period %s and %s",
             request.getStartDate(),
             request.getEndDate()
         );
@@ -63,21 +66,25 @@ public class LeaveValidationServiceImpl implements LeaveValidationService {
 
     @Override
     public LeaveRequest validateAvailableLeaveBalance(LeaveRequest leaveRequest) {
-        String userName = SecurityUtil.getUserName();
-        long currentNumberOfLeaveDays =
-            userRepository.findLeaveDaysByUsernameAndLeaveType(userName, leaveRequest.getEmployee().getLeaveType())
-                .orElseThrow(() -> new LeaveApplicationException("We could not retrieve users remaining days"));
+        String userName = "mickey";
+        LeaveType leaveType = leaveRequest.getLeaveType();
+
+        User leaveDaysByUsernamesAndLeaveType = userRepository.findLeaveDaysByUsernamesAndLeaveType(userName, leaveType)
+            .orElseThrow(() -> new LeaveApplicationException("We could not retrieve users remaining days"));
+
+        long currentNumberOfLeaveDaysForLeaveType = leaveDaysByUsernamesAndLeaveType.getLeaveBalance().get(0).getDays();
 
         long requestedNumberOfLeaveDays = DateUtils.countWeekdaysBetweenDates(leaveRequest.getStartDate(), leaveRequest.getEndDate());
 
-        if (currentNumberOfLeaveDays == 0) {
-            throw new LeaveValidationException(String.format("You have no %s leave days left! You chilled too early mate",
-                leaveRequest.getEmployee().getLeaveType()
-            ));
+        if (currentNumberOfLeaveDaysForLeaveType == 0) {
+            throw new LeaveValidationException(String.format("You have no %s leave days left! You chilled too early mate", leaveType));
         }
-        if (currentNumberOfLeaveDays < requestedNumberOfLeaveDays) {
-            var message = String.format("You have %s days, and you are requesting for%s days. Quite ambitious of you ei",
-                currentNumberOfLeaveDays,
+
+        if (currentNumberOfLeaveDaysForLeaveType < requestedNumberOfLeaveDays) {
+            var message = String.format(
+                "You have %s %s leave days, and you are requesting for %s days. Quite ambitious of you ei",
+                currentNumberOfLeaveDaysForLeaveType,
+                leaveType,
                 requestedNumberOfLeaveDays
             );
             throw new LeaveValidationException(message);

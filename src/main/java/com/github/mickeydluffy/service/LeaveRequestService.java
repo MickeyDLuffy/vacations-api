@@ -6,9 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 public interface LeaveRequestService {
-    LeaveResponseDto applyForLeave(LeaveRequestDto leaveRequest);
+    CompletableFuture<LeaveResponseDto> applyForLeave(LeaveRequestDto leaveRequest);
 
     Set<LeaveResponseDto> fetchLeaveRequests();
 
