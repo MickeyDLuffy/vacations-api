@@ -15,6 +15,7 @@ public class LeaveResponseDto {
     private LocalDate endDate;
     private String reason;
     private LeaveStatus status;
+    private LeaveType leaveType;
     private LocalDate leaveModifiedTime;
     private LocalDate leaveCreationTime;
     private String leaveCreatedBy;
@@ -28,6 +29,7 @@ public class LeaveResponseDto {
             .endDate(entity.getEndDate())
             .reason(entity.getReason())
             .status(entity.getStatus())
+            .leaveType(entity.getLeaveType())
             .employee(entity.getEmployee())
             .leaveCreatedBy(entity.getCreatedBy())
             .leaveCreationTime(entity.getCreatedTimeStamp())

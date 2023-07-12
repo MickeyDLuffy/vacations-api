@@ -1,7 +1,6 @@
 package com.github.mickeydluffy.service.impl;
 
 import com.github.mickeydluffy.dto.LeaveType;
-import com.github.mickeydluffy.dto.UserDto;
 import com.github.mickeydluffy.exception.LeaveApplicationException;
 import com.github.mickeydluffy.exception.LeaveValidationException;
 import com.github.mickeydluffy.model.LeaveRequest;
@@ -61,11 +60,6 @@ public class LeaveValidationServiceImpl implements LeaveValidationService {
         if (isEndDatePriorToStartDate) {
             throw new LeaveValidationException("Invalid date range: The end date must be after the start date");
         }
-
-        User employee = userRepository.findByUsername("user").get();
-
-        UserDto userDto = User.fromEntity(employee);
-        leaveRequest.setEmployee(userDto);
         return leaveRequest;
     }
 

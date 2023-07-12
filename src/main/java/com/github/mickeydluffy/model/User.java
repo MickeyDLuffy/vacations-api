@@ -16,12 +16,19 @@ public class User extends Auditable {
     @Id
     private String id;
     private String username;
+    private String email;
     private String password;
     private Set<Role> roles;
     private List<LeaveBalance> leaveBalance;
-    private String manager;
+    private UserDto manager;
 
     public static UserDto fromEntity(User user) {
-        return UserDto.builder().id(user.getId()).roles(user.getRoles()).username(user.getUsername()).manager(user.getManager()).build();
+        return UserDto.builder()
+            .id(user.getId())
+            .roles(user.getRoles())
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .manager(user.getManager())
+            .build();
     }
 }
