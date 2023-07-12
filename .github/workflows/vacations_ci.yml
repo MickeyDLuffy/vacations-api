@@ -5,13 +5,13 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  VACAY_ADMIN_EMAIL_ADDRESS: ${{env.VACAY_ADMIN_EMAIL_ADDRESS}}
-  VACAY_ADMIN_EMAIL_PASSWORD: ${{secrets.VACAY_ADMIN_EMAIL_PASSWORD}}
+
 
 jobs:
   build:
-
+    env:
+      VACAY_ADMIN_EMAIL_ADDRESS: ${{env.VACAY_ADMIN_EMAIL_ADDRESS}}
+      VACAY_ADMIN_EMAIL_PASSWORD: ${{secrets.VACAY_ADMIN_EMAIL_PASSWORD}}
     runs-on: ubuntu-latest
 
     steps:
