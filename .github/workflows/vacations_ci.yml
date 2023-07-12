@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      VACAY_ADMIN_EMAIL_ADDRESS: ${{ env.VACAY_ADMIN_EMAIL_ADDRESS }}
+      VACAY_ADMIN_EMAIL_ADDRESS: "thefalconslayer@gmail.com"
       VACAY_ADMIN_EMAIL_PASSWORD: ${{ secrets.VACAY_ADMIN_EMAIL_PASSWORD }}
     steps:
     - uses: actions/checkout@v3
