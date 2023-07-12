@@ -11,8 +11,9 @@ import java.util.Set;
 public class UserDto {
     private String id;
     private String username;
+    private String email;
     private Set<Role> roles;
-    private String manager;
+    private UserDto manager;
 
     public static User toEntity(UserDto user) {
         User entity = new User();
@@ -20,6 +21,7 @@ public class UserDto {
         entity.setRoles(user.getRoles());
         entity.setUsername(user.getUsername());
         entity.setManager(user.getManager());
+        entity.setEmail(user.getEmail());
 
         return entity;
     }

@@ -2,10 +2,12 @@ package com.github.mickeydluffy.service.impl;
 
 import com.github.mickeydluffy.dto.LeaveRequestDto;
 import com.github.mickeydluffy.dto.LeaveResponseDto;
+import com.github.mickeydluffy.event.LeaveCreatedEvent;
 import com.github.mickeydluffy.repository.LeaveRequestRepository;
 import com.github.mickeydluffy.service.LeaveRequestService;
 import com.github.mickeydluffy.service.LeaveValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final LeaveRequestRepository leaveRequestRepository;
     private final LeaveValidationService leaveValidationService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public CompletableFuture<LeaveResponseDto> applyForLeave(LeaveRequestDto dto) {
@@ -30,7 +33,11 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
             .thenApply(leaveValidationService::validateLeaveDaysOverlap)
             .thenApply(leaveValidationService::validateLeaveDates)
             .thenApply(leaveRequestRepository::save)
-            .thenApply(LeaveResponseDto::fromEntity);
+            .thenApply(LeaveResponseDto::fromEntity)
+            .thenApply(leaveRequest -> {
+                eventPublisher.publishEvent(LeaveCreatedEvent.of(leaveRequest));
+                return leaveRequest;
+            });
     }
 
     @Override
