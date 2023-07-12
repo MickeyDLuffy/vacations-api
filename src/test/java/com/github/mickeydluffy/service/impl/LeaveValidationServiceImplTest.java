@@ -51,7 +51,7 @@ class LeaveValidationServiceImplTest {
 
         LeaveBalance leaveBalance = LeaveBalance.builder().leaveType(LeaveType.ANNUAL).days(10).build();
 
-        UserDto.builder().username("mickey").id("").manager("").build();
+        UserDto.builder().username("mickey").id("").build();
         user = new User();
         user.setUsername("mickey");
         user.setLeaveBalance(Collections.singletonList(leaveBalance));
