@@ -12,11 +12,13 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      VACAY_ADMIN_EMAIL_ADDRESS: ${{ secrets.VACAY_ADMIN_EMAIL_ADDRESS }}@gmail.com 
+      VACAY_ADMIN_EMAIL_ADDRESS: ${{ secrets.VACAY_ADMIN_EMAIL_ADDRESS }}@gmail.com
       VACAY_ADMIN_EMAIL_PASSWORD: ${{ secrets.VACAY_ADMIN_EMAIL_PASSWORD }}
       VACAY_MONGO_HOST: ${{ secrets.VACAY_MONGO_HOST }}
       VACAY_MONGO_PORT: ${{ secrets.VACAY_MONGO_PORT }}
       VACAY_MONGO_DB: ${{ secrets.VACAY_MONGO_DB }}
+      VACAY_KEYCLOAK_HOST: ${{ secrets.VACAY_KEYCLOAK_HOST }}
+      VACAY_KEYCLOAK_REALM: ${{ secrets.VACAY_KEYCLOAK_REALM }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
