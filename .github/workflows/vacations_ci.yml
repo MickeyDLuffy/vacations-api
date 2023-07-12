@@ -1,6 +1,8 @@
 
 name: leave-api ci
-
+env:
+  VACAY_ADMIN_EMAIL_ADDRESS: ${{env.VACAY_ADMIN_EMAIL_ADDRESS}}
+  VACAY_ADMIN_EMAIL_PASSWORD: ${{secrets.VACAY_ADMIN_EMAIL_PASSWORD}}
 on:
   push:
     branches: [ "main" ]
