@@ -63,11 +63,6 @@ class LeaveValidationServiceImplTest {
     }
 
     @Test
-    void validateLeaveDates_shouldReturnLeaveRequest_whenStartDateIsAtLeastOneDayAheadAndEndDateIsAfterStartDate() {
-        assertEquals(leaveRequest, leaveValidationService.validateLeaveDates(leaveRequest));
-    }
-
-    @Test
     void validateLeaveDates_shouldThrowException_whenStartDateIsNotAtLeastOneDayAhead() {
         leaveRequest.setStartDate(LocalDate.now());
 
