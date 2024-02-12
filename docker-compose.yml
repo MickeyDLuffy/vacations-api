@@ -1,0 +1,61 @@
+version: '3.8'
+
+services: 
+
+#  vacations-api:
+#    restart: always
+#    image: mickeydluffy/vacations-api:latest
+#    container_name: vacations-api
+#    environment:
+#     - SPRING_PROFILE=dev
+#    ports:
+#      - '5002:8080'
+#    depends_on:
+#      - vacations-mongodb-server
+#    networks:
+#      - vacations-network
+
+
+  vacations-mongodb-server:
+    image: mongo:6.0
+    container_name: vacations-mongodb-server
+    restart: always
+    ports:
+      - '27017:27017'
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+
+  keycloak:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_PORT: 5432
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+    ports:
+      - 5050:8080
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    driver: local
+
+
+networks:
+  vacations-network:
+    driver: bridge

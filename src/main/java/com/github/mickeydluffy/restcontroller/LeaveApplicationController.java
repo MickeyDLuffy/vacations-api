@@ -36,7 +36,7 @@ public class LeaveApplicationController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<LeaveResponseDto>> fetchLeaveRequests(@Nullable Pageable pageable) {
+    public ResponseEntity<Page<LeaveResponseDto>> fetchLeaveRequests(@Nullable Pageable pageable, @RequestBody String s) {
         return ResponseEntity.ok(leaveRequestService.fetchLeaveRequests(pageable));
     }
 
